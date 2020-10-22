@@ -1,0 +1,19 @@
+version: "3"
+services:
+    db:
+      # get the image
+      image: mysql:latest
+      # define the container name
+      container_name: "mysql_database"
+      # set up the envinronment
+      environment:
+        MYSQL_DATABASE: 'demo'
+        # Set up a user
+        MYSQL_USER: 'user'
+        # Set up the password
+        MYSQL_PASSWORD: 'password'
+        # Password for root access
+        MYSQL_ROOT_PASSWORD: 'root'
+      # map the ports host:container
+      ports:
+        - "3306:3306"

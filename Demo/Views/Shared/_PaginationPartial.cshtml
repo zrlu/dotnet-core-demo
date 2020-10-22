@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+  int currentPage = (int)ViewData["currentPage"];
+  int pageCount = (int)ViewData["pageCount"];
+  int maxPageCount = 5;
+
+}
+<script>
+  function jumpToPage() {
+    var page = prompt("@Localizer["Jump to:"]", 1);
+    if (!page) return;
+    window.location.search = "?pageIndex=" + page;
+    return;
+  }
+</script>
+
+<nav aria-label="page navigation">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="?pageIndex=@(Math.Max(1, currentPage-1))">@Localizer["Previous"]</a></li>
+    @if (pageCount <= maxPageCount)
+    {
+      for (int i = 1; i <= pageCount; i++)
+      {
+        <li class="page-item @(currentPage == i ? "active" : "")"><a class="page-link" href="?pageIndex=@i">@i</a></li>
+      }
+    }
+    else
+    {
+      int l = 0;
+      List<int> range = new List<int> { };
+      for (int i = 1; i <= pageCount; i++)
+      {
+        if (i == 1 || i == pageCount || i >= currentPage - maxPageCount / 2 && i < currentPage + (maxPageCount - maxPageCount / 2))
+        {
+          range.Add(i);
+        }
+      }
+      foreach (int i in range)
+      {
+        if (l != 0)
+        {
+          if (i - l == 2)
+          {
+            <li class="page-item @(currentPage == l+1 ? "active" : "")"><a class="page-link" href="?pageIndex=@(l+1)">@(l+1)</a></li>
+          }
+          else if (i - l != 1)
+          {
+            <li class="page-item"><a class="page-link" href="#" onclick="jumpToPage()">...</a></li>
+          }
+        }
+        <li class="page-item @(currentPage == i ? "active" : "")"><a class="page-link" href="?pageIndex=@i">@i</a></li>
+        l = i;
+      }
+    }
+    <li class="page-item"><a class="page-link" href="?pageIndex=@(Math.Min(pageCount, currentPage+1))">@Localizer["Next"]</a></li>
+  </ul>
+</nav>
