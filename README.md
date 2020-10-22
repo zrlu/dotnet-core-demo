@@ -31,4 +31,5 @@ Username: admin@example.com
 Password: password
 ```
 
-# The default locale is `zh-CH`. You can change it in `Startup.cs`. 
+## Localization
+The default locale is `zh-CH`. You can change it in `Startup.cs`. 
