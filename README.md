@@ -30,3 +30,5 @@ The administrator account and role are seeded when the server is up the first ti
 Username: admin@example.com
 Password: password
 ```
+
+# The default locale is `zh-CH`. You can change it in `Startup.cs`. 
